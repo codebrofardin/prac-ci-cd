@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Floating Things</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 15%, #3b82f6, transparent 32%),
+        radial-gradient(circle at 80% 80%, #d946ef, transparent 30%),
+        #111827;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      position: fixed;
+      z-index: 2;
+      top: 18px;
+      left: 24px;
+      margin: 0;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      letter-spacing: 0.08em;
+      text-shadow: 0 3px 12px #000;
+    }
+
+    .thing {
+      position: absolute;
+      user-select: none;
+      animation: drift var(--time) ease-in-out infinite alternate;
+      animation-delay: var(--delay);
+      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3));
+    }
+
+    .word {
+      font-weight: 800;
+      font-size: var(--size);
+      color: var(--color);
+    }
+
+    .shape {
+      width: var(--size);
+      height: var(--size);
+      background: var(--color);
+      border-radius: var(--round);
+      transform: rotate(var(--rotate));
+    }
+
+    .emoji {
+      font-size: var(--size);
+    }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) rotate(0deg); }
+      to { transform: translate(var(--x), var(--y)) rotate(var(--spin)); }
+    }
+  </style>
+</head>
+<body>
+  <h1>floating things ✦</h1>
+
+  <script>
+    const words = ["hello", "maybe", "WHEEE", "coffee?", "dream", "404", "nice", "banana", "float", "✨"];
+    const emojis = ["🪐", "🍓", "🦋", "🎈", "🛼", "🧃", "🌈", "🦄", "🪩", "☁️"];
+    const colors = ["#fef08a", "#f9a8d4", "#a7f3d0", "#bfdbfe", "#ddd6fe", "#fdba74"];
+
+    const pick = list => list[Math.floor(Math.random() * list.length)];
+
+    for (let i = 0; i < 42; i++) {
+      const item = document.createElement("div");
+      const type = Math.random();
+
+      item.className =
+        type < 0.42 ? "thing word" :
+        type < 0.72 ? "thing emoji" :
+        "thing shape";
+
+      item.style.left = Math.random() * 96 + "vw";
+      item.style.top = Math.random() * 94 + "vh";
+      item.style.setProperty("--time", 3 + Math.random() * 7 + "s");
+      item.style.setProperty("--delay", -Math.random() * 8 + "s");
+      item.style.setProperty("--x", -80 + Math.random() * 160 + "px");
+      item.style.setProperty("--y", -90 + Math.random() * 180 + "px");
+      item.style.setProperty("--spin", -80 + Math.random() * 160 + "deg");
+      item.style.setProperty("--size", 18 + Math.random() * 42 + "px");
+      item.style.setProperty("--color", pick(colors));
+      item.style.setProperty("--round", Math.random() > 0.5 ? "50%" : "12px");
+      item.style.setProperty("--rotate", Math.random() * 45 + "deg");
+
+      item.textContent =
+        type < 0.42 ? pick(words) :
+        type < 0.72 ? pick(emojis) :
+        "";
+
+      document.body.appendChild(item);
+    }
+  </script>
+</body>
+</html>
