@@ -5,7 +5,11 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         steps:
+            - name: clone the code
+              uses:  actions/checkout@v7
+            - name: Deploy via nginx
+              run: cp main.html /var/ww/html
             - name: Deploy the code
               run: echo "code deployed to AWS EC2"
