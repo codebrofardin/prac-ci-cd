@@ -10,6 +10,6 @@ jobs:
             - name: clone the code
               uses:  actions/checkout@v7
             - name: Deploy via nginx
-              run: cp main.html /var/ww/html
+              run: cp main.html /var/www/html
             - name: Deploy the code
               run: echo "code deployed to AWS EC2"
